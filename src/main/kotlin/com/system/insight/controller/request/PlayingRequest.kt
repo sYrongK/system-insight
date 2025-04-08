@@ -1,6 +1,6 @@
-package com.system.insight.controller.model
+package com.system.insight.controller.request
 
-class PlayingModel(
+class PlayingRequest(
     var nickName: String,
     var userId: Long,
     var profileImageUrl: String,

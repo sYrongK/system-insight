@@ -1,5 +1,28 @@
 System Insight
 
+<pre><code>
+📦 core                          # 전역 공통 계층 (도메인 독립)
+├── exception                   # 커스텀 예외, 베이스 예외
+├── code
+├── config                      # 설정 파일 (Bean 등록, Feign, MQ, Redis 등)
+├── wrapper
+│
+📦 ranking
+├── domain                     # 비즈니스 핵심 규칙
+│   ├── entity                 # JPA 엔티티
+│   ├── document               # Redis / Mongo / ES 문서 구조
+├── persistence                # 저장소 구현
+│   ├── jpa
+│   ├── redis
+├── application                # 유즈케이스 비즈니스 흐름 처리 계층(유즈케이스 처리 구현, 트랜잭션 처리 등)
+│   ├── service
+│   ├── dto
+├── controller                 # 외부 요청 처리 계층
+│   ├── request
+│   ├── response
+</code></pre>
+
+
 변수
 1. 변수명을 먼저 선언하고 그 다음에 타입을 선언한다. (타입은 생략 가능) val num: Int, val num
 2. non-null 프로퍼티는 반드시 초기값을 할당하거나, 생성자에서 초기화를 해야 한다. 그렇지 않으면 컴파일 에러 발생한다.
