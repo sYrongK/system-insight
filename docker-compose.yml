@@ -1,0 +1,14 @@
+version: '3'
+services:
+  mysql-docker:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: 'ranking'
+      MYSQL_ROOT_PASSWORD: '1234'
+      TZ: Asia/Seoul
+    container_name: 'insight-mysql'
+#    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - '3306:3306'
+    volumes:
+      - /Users/somac/docker/data/mysql:/var/lib/mysql

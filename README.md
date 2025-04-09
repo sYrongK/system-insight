@@ -1,6 +1,6 @@
 System Insight
 
-<pre><code>
+```
 📦 core                          # 전역 공통 계층 (도메인 독립)
 ├── exception                   # 커스텀 예외, 베이스 예외
 ├── code
@@ -20,7 +20,22 @@ System Insight
 ├── controller                 # 외부 요청 처리 계층
 │   ├── request
 │   ├── response
-</code></pre>
+```
+
+### DDL
+```sql
+create table user
+(
+    id              bigint       not null comment 'id'
+        primary key,
+    nickName        varchar(30)  not null comment '닉네임',
+    profileImageUrl varchar(255) not null comment '프로필 사진 path',
+    created_at      timestamp    not null comment '생성일자',
+    updated_at      timestamp    null comment '수정일자'
+)
+    comment '회원';
+```
+
 
 
 변수

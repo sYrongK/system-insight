@@ -1,7 +1,10 @@
 spring:
- application:
-  name: system-insight
+  application:
+    name: system-insight
+  datasource:
+    url: jdbc:mysql://localhost:3306/ranking
+    username: root
+    password: 1234
 
 server:
   port: 8080
-
