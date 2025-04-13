@@ -1,6 +1,5 @@
 package com.system.insight.application.service
 
-import com.system.core.error.exception.RankingException
 import com.system.insight.application.eventListener.RankingEventListener
 import com.system.insight.application.eventListener.event.RankingScoreRecordedEvent
 import com.system.insight.controller.request.PlayingRequest
@@ -8,7 +7,6 @@ import com.system.insight.domain.entity.ScoreEntity
 import com.system.insight.domain.entity.UserEntity
 import com.system.insight.persistence.jpa.ScoreRepository
 import com.system.insight.persistence.jpa.UserRepository
-import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
@@ -17,8 +15,9 @@ import org.springframework.transaction.annotation.Transactional
 class GameService(
     var userRepository: UserRepository,
     var scoreRepository: ScoreRepository,
-    var rankingEventListener: RankingEventListener
+    var rankingEventListener: RankingEventListener,
 ) {
+    //todo 100명분 데이터 넣어야 한다.
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     fun playing(playingRequest: PlayingRequest): Long {
