@@ -24,7 +24,7 @@ class GameFacade(
         if (top10.isEmpty()) {
             ranking = rankingService.getTop10WithRecovery()
         } else {
-            ranking =rankingService.getRankingList(top10)
+            ranking =rankingService.setRankingList(top10)
         }
         return ranking;
     }

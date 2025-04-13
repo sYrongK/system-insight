@@ -26,15 +26,6 @@ class RankingService(
         return redisRepository.getRangeWithScoreList("ranking", 0, 9)
     }
 
-    fun getRankingList(data: List<TypedTuple<String>>): List<RankingResponse> {
-        return data.mapIndexed { index, tuple ->
-            val member = tuple.value!!
-            val score = tuple.score!!
-            val user = userRepository.findByUserId(member) ?: throw IllegalArgumentException("User not found")//todo exception
-            RankingResponse(index + 1, user.nickname!!, tuple.value!!, user.profileImageUrl!!, score.toInt())
-        }
-    }
-
     @Transactional
     fun getTop10WithRecovery(): List<RankingResponse> {
         var ranking: List<RankingResponse> = emptyList()
@@ -53,7 +44,7 @@ class RankingService(
     }
 
     @Transactional
-    fun recoverScore(): Boolean {
+    fun recoverScore(): Boolean {//todo 복구 batch 동작시 없으면 recoverScore()
         var recovered = false
         val tuples: Set<TypedTuple<String>> = scoreRepository.findAll()
             .map {
@@ -65,5 +56,14 @@ class RankingService(
             recovered = true
         }
         return recovered
+    }
+
+    fun setRankingList(data: List<TypedTuple<String>>): List<RankingResponse> {
+        return data.mapIndexed { index, tuple ->
+            val member = tuple.value!!
+            val score = tuple.score!!
+            val user = userRepository.findByUserId(member) ?: throw IllegalArgumentException("User not found")//todo exception
+            RankingResponse(index + 1, user.nickname!!, tuple.value!!, user.profileImageUrl!!, score.toInt())
+        }
     }
 }
