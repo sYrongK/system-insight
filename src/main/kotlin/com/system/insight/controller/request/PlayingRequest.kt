@@ -1,8 +1,8 @@
 package com.system.insight.controller.request
 
 class PlayingRequest(
-    var nickName: String,
-    var userId: Long,
+    var nickname: String,
+    var userId: String,
     var profileImageUrl: String,
     var score: Int) {
 

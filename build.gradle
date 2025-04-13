@@ -29,9 +29,9 @@ repositories {
 }
 
 dependencies {
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+//    implementation 'org.springframework.boot:spring-boot-starter-jooq'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
@@ -39,8 +39,7 @@ dependencies {
     implementation 'io.github.microutils:kotlin-logging:3.0.5'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-//    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'mysql:mysql-connector-java:8.0.33'//jooq 코드 생성기가 빌드시점에 동작하기 떄문에
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
@@ -62,3 +61,40 @@ allOpen {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+/*
+jooq {
+    configurations {
+        main {
+            generationTool {
+//                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    // DB 연결 드라이버
+                    driver = 'com.mysql.cj.jdbc.Driver'
+                    url = 'jdbc:mysql://localhost:3306/ranking'
+                    user = 'root'
+                    password = '1234'
+                    properties {
+                        property {
+                            key = 'PAGE_SIZE'
+                            value = 2048
+                        }
+                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.KotlinGenerator'
+                    database {
+                        name = 'org.jooq.meta.mysql.MySQLDatabase'
+                        inputSchema = 'ranking'
+                        includes = '.*'
+                    }
+                    target {
+                        packageName = 'com.system.insight.domain.record'
+                        directory = 'src/main/generated'
+                    }
+//                strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                }
+            }
+        }
+    }
+}*/

@@ -1,27 +1,61 @@
 package com.system.insight.application.service
 
+import com.system.core.error.exception.RankingException
+import com.system.insight.application.eventListener.RankingEventListener
+import com.system.insight.application.eventListener.event.RankingScoreRecordedEvent
 import com.system.insight.controller.request.PlayingRequest
+import com.system.insight.domain.entity.ScoreEntity
+import com.system.insight.domain.entity.UserEntity
+import com.system.insight.persistence.jpa.ScoreRepository
+import com.system.insight.persistence.jpa.UserRepository
+import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class GameService {
+class GameService(
+    var userRepository: UserRepository,
+    var scoreRepository: ScoreRepository,
+    var rankingEventListener: RankingEventListener
+) {
 
-    @Transactional
-    fun playing(playingRequest: PlayingRequest) {
-        TODO("Not yet implemented")
-        /*
-        todo
-        1. nickname, userId, profileImageUrl → RDB (이 경우엔 nosql도 괜찮나?)
-            - RDB 먼저 저장 (에러 발생시 async 취소할 일 없게)
-            - 에러 발생시 로그 남기기 json string 그대로
-        2. score 누적 데이터 생성
-        3. score 누적 데이터 저장 → RDB (원본이자 실시간)
-            - 1~3번 까지 sync로!
-        4. score 누적 데이터 저장 → Redis
-            - 재시도 3번 반복하게 넣을까 최종실패시 로그 남기기
-         */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    fun playing(playingRequest: PlayingRequest): Long {
+        var user = UserEntity()
+        userRepository.findByUserId(playingRequest.userId)?.let {
+            user = UserEntity(
+                id = it.id,
+                userId = it.userId,
+                nickname = playingRequest.nickname,
+                profileImageUrl = playingRequest.profileImageUrl,
+                createdAt = it.createdAt)
+        } ?: run{
+            user = UserEntity(
+                userId = playingRequest.userId,
+                nickname = playingRequest.nickname,
+                profileImageUrl = playingRequest.profileImageUrl)
+        }
 
+
+        var score = ScoreEntity()
+        scoreRepository.findByUserId(playingRequest.userId)?.let {
+            it.score = it.score?.plus(playingRequest.score)
+            score = it
+        } ?: run{
+            score = ScoreEntity(userId = user.userId, score = playingRequest.score)
+        }
+
+        userRepository.save(user)
+        val scoreEntity = scoreRepository.save(score)
+        return scoreEntity.id ?: 0
     }
 
+    fun recordScore(scoreId: Long) {
+        val userScore: ScoreEntity = scoreRepository.findById(scoreId).get()
+
+        val member: String = userScore.userId ?: throw IllegalArgumentException("Redis member [UserEntity > userId] does not exist")
+        val value: Double = userScore.score?.toDouble() ?: 0.0
+        rankingEventListener.handleScoreRecordedEvent(RankingScoreRecordedEvent(member, value))
+    }
 }

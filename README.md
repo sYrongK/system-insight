@@ -28,12 +28,26 @@ create table user
 (
     id              bigint       not null comment 'id'
         primary key,
-    nickName        varchar(30)  not null comment '닉네임',
+    user_id         varchar(50)  not null comment 'user id',
+    nickname        varchar(30)  not null comment '닉네임',
     profileImageUrl varchar(255) not null comment '프로필 사진 path',
     created_at      timestamp    not null comment '생성일자',
     updated_at      timestamp    null comment '수정일자'
 )
     comment '회원';
+```
+
+```sql
+create table user_score
+(
+    id              bigint       not null comment 'id'
+        primary key,
+    user_id        varchar(50)       not null    comment 'user id',
+    score           int         not null    comment '회원 점수',
+    created_at      timestamp   not null    comment '생성일자',
+    updated_at      timestamp   null        comment '수정일자'
+)
+    comment '회원 점수';
 ```
 
 
@@ -44,6 +58,7 @@ create table user
 3. return result!! -> result 변수가 nullable이라면 강제로 non-null로 변환하는 것으로, 값이 Null이면 exception 발생한다.
 4. T? -> 타입 T에 null 허용
 5. 자동 생성된 getter에 접근할 때 .getXX()가 아니라 .XX 로 호출한다.
+6. kotlin에선 모든 클래스와 변수, 메서드는 final로 선언된다.(상속x, 오버라이드x) -> 상속 및 오버라이드 가능하게 하려면 open 키워드 사용 (jpa 사용시 프록시도 open으로 되어 있어야 가능)
 
 method 
 1. func 로 선언
