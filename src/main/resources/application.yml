@@ -9,9 +9,9 @@ spring:
     username: root
     password: 1234
     hikari:
-      maximumPoolSize: 50    # 최대 DB 커넥션 수
+      maximumPoolSize: 150    # 최대 DB 커넥션 수
       minimumIdle: 10        # 최소 유휴 커넥션 수
-      connectionTimeout: 30000  # 커넥션 타임아웃 (ms)
+      connectionTimeout: 5000  # 커넥션 타임아웃 (ms)
 
   data:
     redis:
@@ -20,7 +20,7 @@ spring:
       connect-timeout: 2000ms
       lettuce: # lettuce 클라이언트 사용시 커넥션풀 설정
         pool:
-          max-active: 50 #동시 할당 최대 커넥션
-          max-idle: 50 # 유지될 수 있는 최대 유휴 커넥션 수
-          min-idle: 10 # 유지되어야하는 최대 유휴 커넥션 수
-          max-wait: 500ms # 커넥션 요청시 대기할 최대 시간 (-1ms는 무한 대기)
+          max-active: 200 #동시 할당 최대 커넥션
+          max-idle: 100 # 유지될 수 있는 최대 유휴 커넥션 수
+          min-idle: 20 # 유지되어야하는 최대 유휴 커넥션 수
+          max-wait: 2000ms # 커넥션 요청시 대기할 최대 시간 (-1ms는 무한 대기)
