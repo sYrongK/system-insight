@@ -1,7 +1,7 @@
 package com.system.insight.application.service
 
-import com.system.insight.application.eventListener.RankingEventListener
-import com.system.insight.application.eventListener.event.RankingScoreRecordedEvent
+import com.system.insight.application.event.listener.RankingEventListener
+import com.system.insight.application.event.RankingScoreRecordedEvent
 import com.system.insight.controller.request.PlayingRequest
 import com.system.insight.domain.entity.ScoreEntity
 import com.system.insight.domain.entity.UserEntity

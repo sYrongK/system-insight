@@ -1,4 +1,4 @@
-package com.system.insight.application.eventListener.event
+package com.system.insight.application.event
 
 class RankingScoreRecordedEvent(
     var member: String,

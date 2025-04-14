@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 import kotlin.random.Random
 
-//@Component
+@Component
 class A
     (private val gameFacade: GameFacade
 ) : CommandLineRunner {

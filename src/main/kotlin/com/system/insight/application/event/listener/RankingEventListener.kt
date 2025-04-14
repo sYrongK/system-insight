@@ -1,6 +1,6 @@
-package com.system.insight.application.eventListener
+package com.system.insight.application.event.listener
 
-import com.system.insight.application.eventListener.event.RankingScoreRecordedEvent
+import com.system.insight.application.event.RankingScoreRecordedEvent
 import com.system.insight.application.service.RankingService
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
