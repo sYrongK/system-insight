@@ -1,4 +1,4 @@
-package com.system.insight.application.service
+package com.system.insight.application.ranking.service
 
 import com.system.insight.controller.response.RankingResponse
 import com.system.insight.persistence.jpa.ScoreRepository

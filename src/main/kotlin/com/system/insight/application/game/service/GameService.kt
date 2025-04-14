@@ -1,4 +1,4 @@
-package com.system.insight.application.service
+package com.system.insight.application.game.service
 
 import com.system.insight.application.event.listener.RankingEventListener
 import com.system.insight.application.event.RankingScoreRecordedEvent
@@ -17,7 +17,6 @@ class GameService(
     var scoreRepository: ScoreRepository,
     var rankingEventListener: RankingEventListener,
 ) {
-    //todo 100명분 데이터 넣어야 한다.
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     fun playing(playingRequest: PlayingRequest): Long {

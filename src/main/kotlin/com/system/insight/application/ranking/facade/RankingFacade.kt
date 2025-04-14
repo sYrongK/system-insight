@@ -1,22 +1,14 @@
-package com.system.insight.application.facade
+package com.system.insight.application.ranking.facade
 
-import com.system.insight.application.service.GameService
-import com.system.insight.application.service.RankingService
-import com.system.insight.controller.request.PlayingRequest
+import com.system.insight.application.ranking.service.RankingService
 import com.system.insight.controller.response.RankingResponse
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple
 import org.springframework.stereotype.Service
 
 @Service
-class GameFacade(
-    var gameService: GameService,
+class RankingFacade(
     var rankingService: RankingService
 ) {
-
-    fun playing(playingRequest: PlayingRequest) {
-        val scoreId = gameService.playing(playingRequest)
-        gameService.recordScore(scoreId)
-    }
 
     fun getTop10(): List<RankingResponse> {
         var ranking: List<RankingResponse> = emptyList();

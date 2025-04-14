@@ -1,13 +1,13 @@
 package com.system.core
 
-import com.system.insight.application.facade.GameFacade
+import com.system.insight.application.game.facade.GameFacade
 import com.system.insight.controller.request.PlayingRequest
 import io.github.serpro69.kfaker.Faker
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 import kotlin.random.Random
 
-@Component
+//@Component
 class A
     (private val gameFacade: GameFacade
 ) : CommandLineRunner {

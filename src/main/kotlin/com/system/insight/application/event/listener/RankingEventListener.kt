@@ -1,7 +1,7 @@
 package com.system.insight.application.event.listener
 
 import com.system.insight.application.event.RankingScoreRecordedEvent
-import com.system.insight.application.service.RankingService
+import com.system.insight.application.ranking.service.RankingService
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.springframework.transaction.event.TransactionPhase
