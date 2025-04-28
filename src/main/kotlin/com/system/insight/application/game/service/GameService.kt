@@ -1,15 +1,13 @@
 package com.system.insight.application.game.service
 
-import com.system.insight.application.event.listener.RankingEventListener
 import com.system.insight.application.event.RankingScoreRecordedEvent
+import com.system.insight.application.event.listener.RankingEventListener
 import com.system.insight.controller.request.PlayingRequest
-import com.system.insight.domain.entity.ScoreEntity
-import com.system.insight.domain.entity.UserEntity
-import com.system.insight.persistence.jpa.ScoreRepository
-import com.system.insight.persistence.jpa.UserRepository
+import com.system.insight.domain.document.ScoreDocument
+import com.system.insight.domain.document.UserDocument
+import com.system.insight.persistence.mongo.ScoreRepository
+import com.system.insight.persistence.mongo.UserRepository
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Propagation
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class GameService(
@@ -18,42 +16,34 @@ class GameService(
     var rankingEventListener: RankingEventListener,
 ) {
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    fun playing(playingRequest: PlayingRequest): Long {
-        var user = UserEntity()
+    fun playing(playingRequest: PlayingRequest) {
+        var user = UserDocument()
         userRepository.findByUserId(playingRequest.userId)?.let {
-            user = UserEntity(
+            user = UserDocument(
                 id = it.id,
                 userId = it.userId,
                 nickname = playingRequest.nickname,
                 profileImageUrl = playingRequest.profileImageUrl,
                 createdAt = it.createdAt)
         } ?: run{
-            user = UserEntity(
+            user = UserDocument(
                 userId = playingRequest.userId,
                 nickname = playingRequest.nickname,
                 profileImageUrl = playingRequest.profileImageUrl)
         }
 
 
-        var score = ScoreEntity()
+        var score = ScoreDocument()
         scoreRepository.findByUserId(playingRequest.userId)?.let {
             it.score = it.score?.plus(playingRequest.score)
             score = it
         } ?: run{
-            score = ScoreEntity(userId = user.userId, score = playingRequest.score)
+            score = ScoreDocument(userId = user.userId, score = playingRequest.score)
         }
 
         userRepository.save(user)
-        val scoreEntity = scoreRepository.save(score)
-        return scoreEntity.id ?: 0
-    }
-
-    fun recordScore(scoreId: Long) {
-        val userScore: ScoreEntity = scoreRepository.findById(scoreId).get()
-
-        val member: String = userScore.userId ?: throw IllegalArgumentException("Redis member [UserEntity > userId] does not exist")
-        val value: Double = userScore.score?.toDouble() ?: 0.0
-        rankingEventListener.handleScoreRecordedEvent(RankingScoreRecordedEvent(member, value))
+        val scoreDocument = scoreRepository.save(score)
+        //todo 배치가 낫겠는데?
+        rankingEventListener.handleScoreRecordedEvent(RankingScoreRecordedEvent(scoreDocument.id!!))
     }
 }

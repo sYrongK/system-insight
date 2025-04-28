@@ -28,7 +28,7 @@ open class ScoreEntity(
 
     override fun equals(other: Any?): Boolean {
         if (other == null) return false;
-        return this.id == (other as UserEntity).id
+        return this.id == (other as ScoreEntity).id
     }
 
     override fun hashCode(): Int {

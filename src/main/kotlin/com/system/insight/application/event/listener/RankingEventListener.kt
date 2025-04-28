@@ -15,6 +15,6 @@ class RankingEventListener(
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun handleScoreRecordedEvent(event: RankingScoreRecordedEvent) {
-        rankingService.recordScore(event.member, event.value)
+        rankingService.recordScore(event.scoreId)
     }
 }

@@ -5,9 +5,9 @@ spring:
   application:
     name: system-insight
   datasource:
-    url: jdbc:mysql://localhost:3306/ranking
+    url: jdbc:mongodb://localhost:8081/ranking
     username: root
-    password: 1234
+    password: password
     hikari:
       maximumPoolSize: 150    # 최대 DB 커넥션 수
       minimumIdle: 10        # 최소 유휴 커넥션 수

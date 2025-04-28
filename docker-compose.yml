@@ -21,3 +21,28 @@ services:
       - '6379:6379'
     volumes:
       - /Users/somac/docker/data/redis:/data
+
+  mongo:
+    image: mongo:6.0
+    container_name: 'mongo'
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - /Users/somac/docker./mongodb/data:/data/db
+      - /Users/somac/docker/mongodb/config:/data/configdb
+    restart: always
+
+  mongo-express:
+    image: mongo-express:1.0.0-alpha.4
+    container_name: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+    depends_on:
+      - mongo
