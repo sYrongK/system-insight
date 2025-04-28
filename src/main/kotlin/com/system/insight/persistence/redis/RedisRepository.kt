@@ -11,6 +11,10 @@ class RedisRepository(
 ) {
     private val log = LoggerFactory.getLogger(RedisRepository::class.java)
 
+//    fun aa() {
+//        redisTemplate.executePipelined()
+//    }
+
     fun addScore(key: String, member: String, score: Double) {
         try {
             redisTemplate.opsForZSet().add(key, member, score)
