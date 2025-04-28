@@ -52,7 +52,7 @@ class RankingService(
             }.toSet()
 
         if (tuples.isNotEmpty()) {
-            redisRepository.addScores("ranking", tuples)
+            redisRepository.addScoreByPipeline("ranking", tuples)
             recovered = true
         }
         return recovered

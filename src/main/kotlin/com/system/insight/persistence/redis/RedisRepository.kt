@@ -11,9 +11,24 @@ class RedisRepository(
 ) {
     private val log = LoggerFactory.getLogger(RedisRepository::class.java)
 
-//    fun aa() {
-//        redisTemplate.executePipelined()
-//    }
+    /*
+    executePipelined로 일정 사이즈만큼씩 flush하게 처리
+     */
+    fun addScoreByPipeline(key: String, tuple: Set<TypedTuple<String>>) {
+        log.info("호출했다!!! ::: $tuple.size")
+        redisTemplate.executePipelined{connection ->
+            val keySerializer = redisTemplate.stringSerializer
+            val valueSerializer = redisTemplate.stringSerializer
+            tuple.toList()
+                .chunked(35)//size만큼 list를 조각냄
+                .forEachIndexed{index, batch ->//잘린 조각(batch) 하나하나 순회
+                    batch.forEach{ tuple ->
+                        connection.zSetCommands().zAdd(keySerializer.serialize(key)!!, tuple.score!!, valueSerializer.serialize(tuple.value)!!)
+                    }
+                }
+            null // 중요! executePipelined 블록 안에서는 null 리턴
+        }
+    }
 
     fun addScore(key: String, member: String, score: Double) {
         try {

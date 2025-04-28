@@ -18,15 +18,16 @@ spring:
       host: localhost
       port: 6379
       connect-timeout: 2000ms
-      lettuce: # lettuce 클라이언트 사용시 커넥션풀 설정
-        pool:
-          max-active: 50 #동시 할당 최대 커넥션
-          max-idle: 20 # 사용하지 않아도 유지할 커넥션 수(항상 대기상태로 둘 커넥션 수) 최대값
-          min-idle: 5 # 사용하지 않아도 유지할 커넥션 수(항상 대기상태로 둘 커넥션 수) 최소값
-          max-wait: 1500ms # 커넥션 요청시 대기할 최대 시간 (-1ms는 무한 대기)
+#      lettuce: # lettuce 클라이언트 사용시 커넥션풀 설정
+#        pool:
+#          max-active: 50 #동시 할당 최대 커넥션
+#          max-idle: 20 # 사용하지 않아도 유지할 커넥션 수(항상 대기상태로 둘 커넥션 수) 최대값
+#          min-idle: 5 # 사용하지 않아도 유지할 커넥션 수(항상 대기상태로 둘 커넥션 수) 최소값
+#          max-wait: 1500ms # 커넥션 요청시 대기할 최대 시간 (-1ms는 무한 대기)
 
-#logging:
-#  level:
+logging:
+  level:
 #    io.lettuce.core: DEBUG
 #    io.lettuce.core.protocol: DEBUG
 #    io.lettuce.core.resource: DEBUG
+    org.apache.commons.pool2: DEBUG
