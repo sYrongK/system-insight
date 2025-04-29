@@ -1,6 +1,10 @@
-System Insight
+# System Insight - Ranking 시스템 구현
+
+Redis를 활용해서 게임 시스템의 Top 10 랭킹 조회 구현 
 
 ```
+[소프트웨어 아키텍처 패턴]
+
 📦 core                          # 전역 공통 계층 (도메인 독립)
 ├── exception                   # 커스텀 예외, 베이스 예외
 ├── code
@@ -22,34 +26,14 @@ System Insight
 │   ├── response
 ```
 
-### DDL
-```sql
-create table user
-(
-    id              bigint       not null comment 'id'
-        primary key,
-    user_id         varchar(50)  not null comment 'user id',
-    nickname        varchar(30)  not null comment '닉네임',
-    profileImageUrl varchar(255) not null comment '프로필 사진 path',
-    created_at      timestamp    not null comment '생성일자',
-    updated_at      timestamp    null comment '수정일자'
-)
-    comment '회원';
-```
 
-```sql
-create table user_score
-(
-    id              bigint       not null comment 'id'
-        primary key,
-    user_id        varchar(50)       not null    comment 'user id',
-    score           int         not null    comment '회원 점수',
-    created_at      timestamp   not null    comment '생성일자',
-    updated_at      timestamp   null        comment '수정일자'
-)
-    comment '회원 점수';
-```
+branch
+- master: mysql & redis zset
+- feature/rdb: mongodb로 변경해서 구현
 
+
+------ 
+여긴 kotlin 공부 메모...
 
 
 변수
