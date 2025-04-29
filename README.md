@@ -71,3 +71,6 @@ keyword
 
 Lombok
 1. Lombok 지원하지 않는다.
+
+loop
+1. loop 안에서 return@forEach -> java의 continue;

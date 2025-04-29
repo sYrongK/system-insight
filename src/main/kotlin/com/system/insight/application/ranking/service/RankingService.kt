@@ -1,8 +1,8 @@
 package com.system.insight.application.ranking.service
 
 import com.system.insight.controller.response.RankingResponse
-import com.system.insight.persistence.jpa.ScoreRepository
-import com.system.insight.persistence.jpa.UserRepository
+import com.system.insight.persistence.jpa.ScoreEntityRepository
+import com.system.insight.persistence.jpa.UserEntityRepository
 import com.system.insight.persistence.redis.RedisRepository
 import org.springframework.data.redis.core.DefaultTypedTuple
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple
@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class RankingService(
     var redisRepository: RedisRepository,
-    var userRepository: UserRepository,
-    var scoreRepository: ScoreRepository,
+    var userEntityRepository: UserEntityRepository,
+    var scoreEntityRepository: ScoreEntityRepository,
 ) {
 
     @Transactional
@@ -36,7 +36,7 @@ class RankingService(
             ranking = top10.mapIndexed { index, tuple ->
                 val member = tuple.value!!
                 val score = tuple.score!!
-                val user = userRepository.findByUserId(member) ?: throw IllegalArgumentException("User not found")//todo exception
+                val user = userEntityRepository.findByUserId(member) ?: throw IllegalArgumentException("User not found")//todo exception
                 RankingResponse(index + 1, user.nickname!!, tuple.value!!, user.profileImageUrl!!, score.toInt())
             }
         }
@@ -46,7 +46,7 @@ class RankingService(
     @Transactional
     fun recoverScore(): Boolean {//todo 복구 batch 동작시 없으면 recoverScore()
         var recovered = false
-        val tuples: Set<TypedTuple<String>> = scoreRepository.findAll()
+        val tuples: Set<TypedTuple<String>> = scoreEntityRepository.findAll()
             .map {
                 DefaultTypedTuple(it.userId, it.score?.toDouble() ?:0.0)
             }.toSet()
@@ -62,7 +62,7 @@ class RankingService(
         return data.mapIndexed { index, tuple ->
             val member = tuple.value!!
             val score = tuple.score!!
-            val user = userRepository.findByUserId(member) ?: throw IllegalArgumentException("User not found")//todo exception
+            val user = userEntityRepository.findByUserId(member) ?: throw IllegalArgumentException("User not found")//todo exception
             RankingResponse(index + 1, user.nickname!!, tuple.value!!, user.profileImageUrl!!, score.toInt())
         }
     }
