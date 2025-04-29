@@ -2,6 +2,7 @@ package com.system.insight.domain.document
 
 import com.system.insight.domain.entity.UserEntity
 import jakarta.persistence.Id
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 
@@ -10,6 +11,7 @@ open class ScoreDocument(
     @Id
     open var id: String? = null,
 
+    @Indexed
     open var userId: String? = null,
 
     open var score: Int? = 0,

@@ -2,7 +2,6 @@ package com.system.insight.controller
 
 import com.system.core.wrapper.ResultResponse
 import com.system.insight.application.game.service.GameService
-import com.system.insight.application.ranking.facade.RankingFacade
 import com.system.insight.application.ranking.service.RankingService
 import com.system.insight.controller.request.PlayingRequest
 import com.system.insight.controller.response.RankingResponse

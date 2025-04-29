@@ -31,8 +31,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
-      - /Users/somac/docker./mongodb/data:/data/db
-      - /Users/somac/docker/mongodb/config:/data/configdb
+      - /Users/syrongk/docker./mongodb/data:/data/db
+      - /Users/syrongk/docker/mongodb/config:/data/configdb
     restart: always
 
   mongo-express:

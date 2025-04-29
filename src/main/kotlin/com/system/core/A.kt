@@ -1,13 +1,15 @@
 package com.system.core
 
+import com.system.insight.application.game.service.GameService
 import com.system.insight.controller.request.PlayingRequest
 import io.github.serpro69.kfaker.Faker
 import org.springframework.boot.CommandLineRunner
+import org.springframework.stereotype.Component
 import kotlin.random.Random
 
 //@Component
 class A
-    (private val gameFacade: GameFacade
+    (private val gameService: GameService
 ) : CommandLineRunner {
 
     override fun run(vararg args: String?) {
@@ -21,7 +23,7 @@ class A
                 "https://cdn.example.com/images/player1.png",
                 Random.nextInt(0, 201)
             )
-            gameFacade.playing(request)
+            gameService.playing(request)
         }
     }
 }

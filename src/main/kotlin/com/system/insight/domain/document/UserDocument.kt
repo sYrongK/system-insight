@@ -4,6 +4,7 @@ import com.system.insight.domain.entity.UserEntity
 import jakarta.persistence.Id
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 
@@ -13,6 +14,7 @@ class UserDocument(
     @Id
     open var id: String? = null,//MongoDB 기본 _id타입 ObjectId (24자리 hex 문자열)
 
+    @Indexed
     open var userId: String? = null,
 
     open var nickname: String? = null,

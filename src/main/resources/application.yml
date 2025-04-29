@@ -4,20 +4,14 @@ server:
 spring:
   application:
     name: system-insight
-  datasource:
-    url: jdbc:mongodb://localhost:8081/ranking
-    username: root
-    password: password
-    hikari:
-      maximumPoolSize: 150    # 최대 DB 커넥션 수
-      minimumIdle: 10        # 최소 유휴 커넥션 수
-      connectionTimeout: 5000  # 커넥션 타임아웃 (ms)
 
   data:
-    redis:
-      host: localhost
-      port: 6379
-      connect-timeout: 2000ms
+    mongodb:
+      uri: mongodb://root:password@localhost:27017/ranking?authSource=admin
+#    redis:
+#      host: localhost
+#      port: 6379
+#      connect-timeout: 2000ms
 #      lettuce: # lettuce 클라이언트 사용시 커넥션풀 설정
 #        pool:
 #          max-active: 50 #동시 할당 최대 커넥션
